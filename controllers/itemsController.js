@@ -18,7 +18,7 @@ const getAllItems = async (req, res) => {
         return { ...item, username: user.username }
     }))
 
-    res.json(itemswithUser)
+    res.json(itemsWithUser)
 
 }
 
@@ -32,18 +32,30 @@ const createNewItem = async (req, res) => {
     if (!user || !title || !text) {
         return res.status(400).json({ message: 'All fields are required' })
     }
+
     // check for duplicate items (by title)
     const duplicate = await Item.findOne({ title }).collation({ locale: 'en', strength: 2 }).lean().exec()
     if (duplicate) {
-        return res.status(409).json({ message: 'Duplicate item already included' })
+        return res.status(409).json({ message: 'Duplicate item (by title) already included' })
     }
+
     // Create and store new item on DB
+    try {
+        const item = await Item.create({ user, title, text })
+        console.log(item)
+        res.status(201).json({ message: `New item ${title} created for ${user}` })
+
+    } catch (error) {
+        res.status(400).json({ message: 'Invalid item data received' })
+        console.log(error)
+    }
+    /*
     const item = await Item.create({ user, title, text })
     if (item) {
         res.status(201).json({ message: `New item ${title} created for ${user}` })
     } else {
         res.status(400).json({ message: 'Invalid item data received' })
-    }
+    }*/
 }
 
 //@desc update item

@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken')
 //@route POST /auth
 //@access Public
 const login = async (req, res) => {
-    const { username, password } = req.body
+    const { username, password } = req.body //inputs have to line up exactly with these names
 
     if (!username || !password) {
         return res.status(400).json({ message: 'All fields are required - either missing a username or password' })
@@ -20,7 +20,7 @@ const login = async (req, res) => {
         return res.status(401).json({ message: 'Unauthorised yo - no matching User or active User' })
     }
 
-    const match = await bcrypt.compare(password, foundUser.password)
+    const match = await bcrypt.compare(password, foundUser.password) //password = plain-text password / foundUser.password = encrypted password
 
     if (!match) return res.status(401).json({ message: 'Unauthorised yo. No matching password' })
 

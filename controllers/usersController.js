@@ -16,7 +16,7 @@ const getAllUsers = async (req, res) => {
     res.json(users)
 }
 
-//@desc create new user
+//@desc create new user (and role)
 //@route POST /users
 //@access private
 const createNewUser = async (req, res) => {

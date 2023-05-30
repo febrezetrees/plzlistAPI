@@ -8,7 +8,7 @@ const User = require('../models/User')
 //@access private
 
 const getAllItems = async (req, res) => {
-    const items = await Item.find().lean()
+    const items = await Item.find().lean() //gets all items from DB
     if (!items?.length) {
         return res.status(400).json({ message: 'No items found' })
     }

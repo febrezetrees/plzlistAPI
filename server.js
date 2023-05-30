@@ -29,6 +29,7 @@ app.use('/', express.static(path.join(__dirname, '/public')))
 
 //Routes
 app.use('/', require('./routes/root')) // splash page
+app.use('/register', require('./routes/registerRoutes'))
 app.use('/auth', require('./routes/authRoutes'))
 app.use('/users', require('./routes/userRoutes'))
 app.use('/items', require('./routes/itemRoutes'))
